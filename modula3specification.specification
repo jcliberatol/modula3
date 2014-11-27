@@ -1,0 +1,73 @@
+#Nota , este archivo no incluye codigo que se deba correr simplemente es una 
+#ayuda para ver la especificacion del lenguaje
+
+
+#______________________MODULA3 : ESPECIFICACION DEL LENGUAJE____________________
+
+
+######INTERFACES
+
+#El elemento principal en modula son los modulos, que se parecen a las clases de 
+#otros lenguajes de programacion , la parte publica de estos modulos se declara 
+#en las interfaces , que se ponen en un archivo separado .i3 la sintaxis de una 
+#interfaz es como la que sigue a continuacion :
+
+INTERFACE <interface-name>;
+
+{Imports}
+
+{Declarations}
+
+END <interface-name>.
+
+
+######IMPLEMENTACION
+
+#La implementacion corresponde a la parte privada de un modulo, esta se 
+#especifica en un archivo .m3
+
+MODULE <module-name> [ EXPORTS <interface> { "," <interface> ... } ];
+
+{Imports}      
+
+{Declarations} 
+
+BEGIN  (* Optional Module startup code; BEGIN required *)
+END <module-name>.
+
+#ejemplo : 
+MODULE MyModule;
+
+IMPORT IO;
+
+PROCEDURE PrintThing(READONLY r: Thing) = 
+  BEGIN
+    IO.Put(r.name&"\t");
+    IO.PutInt(r.size);
+    IO.Put("\n");
+  END PrintThing;
+
+PROCEDURE MakeThing(n: TEXT; s: INTEGER): Thing =
+  BEGIN
+    RETURN Thing{n, s};
+  END MakeThing;
+
+END MyModule.
+
+
+#####IMPORTS
+
+#Los archivos de modula pueden importar otros modulos para usar sus interfaces,
+#La definicion formal de un import es :
+
+IMPORT <module-name> [ AS <alias> ] { "," ... } ";"
+
+#tambien puede ser :
+
+FROM <module-name> IMPORT <decl-name> { "," <decl-name>...} ";"
+
+
+#ejemplo :
+
+IMPORT Box;
+FROM Box IMPORT Size;
